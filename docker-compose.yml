@@ -1,0 +1,21 @@
+#way to do note have to use the command line below.
+#docker run -it -p 3000:3000 -v /app/node_modules -v ${pwd}:/app -e CHOKIDAR_USEPOLLING=true 9c53c6c088b8f52e3d32b0600f3f8480d6c03ba4c95299e15ee0ba0e5679bb49
+version: '3'
+services:
+  web:
+    build: 
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - /app/node_modules
+      - .:/app
+  tests:
+    build: 
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - .:/app
+    command: ["npm", "run", "test"]
